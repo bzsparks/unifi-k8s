@@ -1,0 +1,10 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: controller
+        ports:
+        - name: "stun"
+          containerPort: 3478
+          hostPort: 3478
+          protocol: UDP

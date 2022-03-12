@@ -1,0 +1,35 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-unifi-tcp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  ports:
+    - name: 'tcp8080'
+      protocol: TCP
+      port: 8080
+      targetPort: 8080
+    - name: 'tcp8443'
+      protocol: TCP
+      port: 8443
+      targetPort: 8443
+  selector:
+    name: unifi-controller
+  type: LoadBalancer
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: lb-unifi-udp
+  annotations:
+    metallb.universe.tf/allow-shared-ip: 'true'
+spec:
+  ports:
+    - name: 'udp3478'
+      protocol: UDP
+      port: 3478
+      targetPort: 3478
+  selector:
+    name: unifi-controller
+  type: LoadBalancer

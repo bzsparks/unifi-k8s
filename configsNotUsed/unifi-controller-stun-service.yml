@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-controller-stun
+spec:
+  selector:
+    name: unifi-controller
+  ports:
+    - name: "udp3478"
+      protocol: UDP
+      port: 3478
+      targetPort: 3478

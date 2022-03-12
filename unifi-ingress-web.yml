@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+  name: unifi-ingress-web
+spec:
+  defaultBackend:
+    service:
+      name: nginx-clusterip
+      port:
+        number: 80
+  ingressClassName: nginx
+  tls:
+    - hosts:
+      - mydomain.com
+      - "*.mydomain.com"
+      secretName: mydomain-com
+  rules:
+  - host: "unifi-web.mydomain.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: unifi-controller-web
+            port:
+              number: 443

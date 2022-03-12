@@ -1,0 +1,42 @@
+---
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: unifi-controller
+spec:
+  serviceName: "unifi"
+  replicas: 1
+  selector:
+    matchLabels:
+      name: unifi-controller
+  template:
+    metadata:
+      name: unifi-controller
+      labels:
+        name: unifi-controller
+    spec:
+      volumes:
+        - name: nfs-unifi
+          persistentVolumeClaim:
+            claimName: nfs-unifi
+      containers:
+        - env:
+          - name: TZ
+            value: America/Chicago
+          image: jacobalberty/unifi:latest
+          imagePullPolicy: Always
+          name: unifi-controller
+          ports:
+          - name: "udp3478"
+            containerPort: 3478
+            protocol: UDP
+          - name: "tcp8080"
+            containerPort: 8080
+            protocol: TCP
+          - name: "tcp8443"
+            containerPort: 8443
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /unifi 
+            name: nfs-unifi
+            subPath: unifi
