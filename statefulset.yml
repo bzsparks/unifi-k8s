@@ -23,6 +23,12 @@ spec:
         - env:
           - name: TZ
             value: America/Chicago
+          - name: RUNAS_UID0
+            value: 'false'
+          - name: UNIFI_UID
+            value: '997'
+          - name: UNIFI_GID
+            value: '997'
           image: jacobalberty/unifi:latest
           imagePullPolicy: Always
           name: unifi-controller
